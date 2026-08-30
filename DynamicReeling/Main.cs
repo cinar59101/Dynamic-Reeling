@@ -1,6 +1,7 @@
-﻿using MelonLoader;
+using MelonLoader;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 using UIImage = UnityEngine.UI.Image;
@@ -31,7 +32,8 @@ namespace DynamicReeling
         private static float minigameCooldown = 0f;
         private static GameObject lastHandledBaitGO = null;
 
-        // Visual Objects
+        // Visual & Canvas Objects
+        private static Canvas modCanvas = null;
         private static GameObject minigamePanelObj = null;
         private static RectTransform safeZoneRect = null;
         private static RectTransform fishIconRect = null;
@@ -92,7 +94,7 @@ namespace DynamicReeling
 
         public override void OnInitializeMelon()
         {
-            MelonLogger.Msg("DynamicReeling v1.8.7 (Pause Menu Support) Loaded!");
+            MelonLogger.Msg("DynamicReeling v1.8.7 (Independent Overlay Canvas Fixed) Loaded!");
             CreateRoundedSprite();
             GetSafeFont();
         }
@@ -128,7 +130,7 @@ namespace DynamicReeling
         {
             if (!IsModEnabled) return;
 
-            // Esc / Pause Menüsü Kontrolü: Oyun duraklatıldığında minigame görünümünü geçici olarak gizle
+            // Esc / Pause Menüsü Kontrolü
             if (Time.timeScale == 0f)
             {
                 if (minigamePanelObj != null && minigamePanelObj.activeSelf)
@@ -287,15 +289,30 @@ namespace DynamicReeling
         {
             if (minigamePanelObj != null) return;
 
-            Canvas globalCanvas = UnityEngine.Object.FindAnyObjectByType<Canvas>();
-            if (globalCanvas == null) return;
-
             Font safeFont = GetSafeFont();
 
             try
             {
+                // 1. Oyundan Bağımsız Özel Overlay Canvas Yapısı
+                if (modCanvas == null)
+                {
+                    GameObject canvasObj = new GameObject("DynamicReeling_Canvas");
+                    UnityEngine.Object.DontDestroyOnLoad(canvasObj);
+
+                    modCanvas = canvasObj.AddComponent<Canvas>();
+                    modCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                    modCanvas.sortingOrder = 9999;
+
+                    CanvasScaler scaler = canvasObj.AddComponent<CanvasScaler>();
+                    scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                    scaler.referenceResolution = new Vector2(1920, 1080);
+
+                    canvasObj.AddComponent<GraphicRaycaster>();
+                }
+
+                // 2. Ana Panel
                 minigamePanelObj = new GameObject("DynamicReeling_ModernPanel");
-                minigamePanelObj.transform.SetParent(globalCanvas.transform, false);
+                minigamePanelObj.transform.SetParent(modCanvas.transform, false);
 
                 RectTransform mainRect = minigamePanelObj.AddComponent<RectTransform>();
                 mainRect.sizeDelta = new Vector2(300f, 105f);
@@ -630,7 +647,6 @@ namespace DynamicReeling
         {
             if (!Main.IsModEnabled || __instance == null || __instance.Bait == null) return;
 
-            // Oyun duraklatılmışsa minigame mantığını yürütme
             if (Time.timeScale == 0f) return;
 
             Item itemOnBait = __instance.Bait.ItemOnBait;
@@ -680,7 +696,6 @@ namespace DynamicReeling
         {
             if (!Main.IsModEnabled || __instance == null) return true;
 
-            // Menü açıkken orjinal işleyişe müdahale etme
             if (Time.timeScale == 0f) return true;
 
             bool isPressingReel = UnityEngine.Input.GetKey(KeyCode.E) || UnityEngine.Input.GetMouseButton(0);
