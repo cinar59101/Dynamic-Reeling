@@ -1,0 +1,6 @@
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\bin\x64\Release\DynamicReeling.dll
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\bin\x64\Release\DynamicReeling.pdb
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\obj\x64\Release\DynamicReeling.csproj.AssemblyReference.cache
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\obj\x64\Release\DynamicReeling.csproj.CoreCompileInputs.cache
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\obj\x64\Release\DynamicReeling.dll
+C:\Users\ÇAK\source\repos\DynamicReeling\DynamicReeling\obj\x64\Release\DynamicReeling.pdb
