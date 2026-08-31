@@ -2,6 +2,13 @@
 
 **DynamicReeling** is a MelonLoader mod for the game *How to Fish*. It replaces the default fishing mechanics with a modern, responsive, and aesthetically pleasing minigame inspired by *Web Fishing* and *Stardew Valley*.
 
+Without mod
+
+<img width="1920" height="1080" alt="before" src="https://github.com/user-attachments/assets/b80d6be6-ffad-4254-be65-9fa9d7459920" />
+
+With Mod
+<img width="1920" height="1080" alt="after" src="https://github.com/user-attachments/assets/27bca1c4-5d9c-44f6-83d9-ffa1f75d2630" />
+
 ## ✨ Features
 
 - **Modern Native UI:** Built natively on Unity's UI Canvas (`RectTransform`, procedural 9-slice rounded corners, custom themes) without using legacy `OnGUI`.
