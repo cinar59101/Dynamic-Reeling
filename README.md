@@ -24,6 +24,7 @@ With Mod
 | :--- | :--- |
 | **Reel In / Hold Zone** | `Mouse Left Click` or `E` key |
 | **Toggle Mod On/Off** | `F3` key |
+Just So its Clear F3 Key Is normaly meant for Debuging
 
 ## 📥 Installation
 
